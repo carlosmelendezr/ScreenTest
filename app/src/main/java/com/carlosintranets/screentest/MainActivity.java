@@ -63,8 +63,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         String celda = celdas[v.getId()];
-                        Toast msg = Toast.makeText(getApplicationContext(), "Hasta pulsado click en " + celda, Toast.LENGTH_LONG);
-                        msg.show();
+                        Button boton = (Button) findViewById(v.getId());
+                        boton.setBackgroundColor(Color.RED);
+                        //Toast msg = Toast.makeText(getApplicationContext(), "Hasta pulsado click en " + celda, Toast.LENGTH_LONG);
+                        //msg.show();
                     }
                 });
 
