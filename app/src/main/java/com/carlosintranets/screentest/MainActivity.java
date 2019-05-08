@@ -1,5 +1,6 @@
 package com.carlosintranets.screentest;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,18 +10,39 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     private String[] letras = {"a","b","c","d","e","f","g","h"};
     private String[] celdas = new String[63*63];
+    private List<Integer> idBotones = new ArrayList();
+    Tablero tab = new Tablero();
+    int btid ;
+    int inicia ;
+    LinearLayout fila;
+    Activity esta = this;
+    int errores=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LinearLayout tablero=null;
-        int btid=0;
-        int inicia ;
+        Button botreiniciar =  (Button) findViewById(R.id.botreiniciar);
+
+        botreiniciar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                tab.Clear();
+                botonesUtil.limpiarTablero(esta,idBotones);
+
+
+            }
+        });
+
+        btid = 0;
         for(int i=0;i<8;i++) {
 
             if (i%2==0) {
@@ -30,14 +52,14 @@ public class MainActivity extends AppCompatActivity {
             }
 
             switch (i){
-                case 0: tablero = (LinearLayout) findViewById(R.id.horizontal1);break;
-                case 1: tablero = (LinearLayout) findViewById(R.id.horizontal2);break;
-                case 2: tablero = (LinearLayout) findViewById(R.id.horizontal3);break;
-                case 3: tablero = (LinearLayout) findViewById(R.id.horizontal4);break;
-                case 4: tablero = (LinearLayout) findViewById(R.id.horizontal5);break;
-                case 5: tablero = (LinearLayout) findViewById(R.id.horizontal6);break;
-                case 6: tablero = (LinearLayout) findViewById(R.id.horizontal7);break;
-                case 7: tablero = (LinearLayout) findViewById(R.id.horizontal8);break;
+                case 0: fila = (LinearLayout) findViewById(R.id.horizontal1);break;
+                case 1: fila = (LinearLayout) findViewById(R.id.horizontal2);break;
+                case 2: fila = (LinearLayout) findViewById(R.id.horizontal3);break;
+                case 3: fila = (LinearLayout) findViewById(R.id.horizontal4);break;
+                case 4: fila = (LinearLayout) findViewById(R.id.horizontal5);break;
+                case 5: fila = (LinearLayout) findViewById(R.id.horizontal6);break;
+                case 6: fila = (LinearLayout) findViewById(R.id.horizontal7);break;
+                case 7: fila = (LinearLayout) findViewById(R.id.horizontal8);break;
             }
 
 
@@ -47,34 +69,59 @@ public class MainActivity extends AppCompatActivity {
 
                 Button bt = new Button(this);
                 bt.setId(btid);
-                bt.setText(celdas[btid]);
+                idBotones.add(btid);
 
                 bt.setWidth(70);
                 bt.setHeight(70);
                 if ( inicia==0) {
                     bt.setBackgroundColor(Color.BLACK);
+                    bt.setTextColor(Color.BLACK);
+                    bt.setText("B");
                     inicia=1;
                 } else {
                     bt.setBackgroundColor(Color.WHITE);
+                    bt.setTextColor(Color.WHITE);
+                    bt.setText("W");
                     inicia=0;
                 }
 
                 bt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         String celda = celdas[v.getId()];
                         Button boton = (Button) findViewById(v.getId());
-                        boton.setBackgroundColor(Color.RED);
-                        //Toast msg = Toast.makeText(getApplicationContext(), "Hasta pulsado click en " + celda, Toast.LENGTH_LONG);
-                        //msg.show();
+
+                        if (tab.setCeldaEstado(Tablero.CELDA_REINA,v.getId())) {
+                            boton.setBackgroundColor(Color.GREEN);
+                            boton.setTextColor(Color.GREEN);
+                        } else {
+                            boton.setBackgroundColor(Color.RED);
+                            boton.setTextColor(Color.RED);
+                            errores++;
+                            if (errores>4) {
+                                errores =0;
+                                Toast mes = Toast.makeText(esta,
+                                        "Muchos errores, re reinicia el juego",
+                                        Toast.LENGTH_SHORT);
+                                mes.show();
+                                tab.Clear();
+                                botonesUtil.limpiarTablero(esta,idBotones);
+
+
+                            }
+                        }
+
                     }
                 });
 
-                Log.i("Tablero","Agregando en ID "+tablero.getId());
-                tablero.addView(bt);
+
+                fila.addView(bt);
                 btid++;
             }
         }
+
+
 
     }
 }
