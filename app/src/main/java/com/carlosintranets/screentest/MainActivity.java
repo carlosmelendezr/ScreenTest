@@ -42,10 +42,10 @@ public class MainActivity extends AppCompatActivity {
                 errores=0;
                 reinas=8;
                 TextView textErrores = (TextView) findViewById(R.id.errores);
-                textErrores.setText("Errores : "+errores);
+                textErrores.setText( getResources().getString(R.string.errores)+errores);
 
                 TextView textReinas = (TextView) findViewById(R.id.reinas);
-                textReinas.setText("Reinas restantes : "+reinas);
+                textReinas.setText( getResources().getString(R.string.reinas_restantes)+reinas);
 
 
             }
@@ -129,11 +129,12 @@ public class MainActivity extends AppCompatActivity {
 
                         }
 
+
                         TextView textErrores = (TextView) findViewById(R.id.errores);
-                        textErrores.setText("Errores : "+errores);
+                        textErrores.setText( getResources().getString(R.string.errores)+errores);
 
                         TextView textReinas = (TextView) findViewById(R.id.reinas);
-                        textReinas.setText("Reinas restantes : "+reinas);
+                        textReinas.setText( getResources().getString(R.string.reinas_restantes)+reinas);
 
                     }
                 });
