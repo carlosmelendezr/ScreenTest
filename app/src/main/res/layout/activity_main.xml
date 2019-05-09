@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,7 +17,7 @@
         android:id="@+id/vertical"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="384dp">
+        android:layout_height="421dp">
 
 
         <LinearLayout
@@ -92,6 +93,40 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/botones"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="154dp">
+
+        <Button
+            android:text="Reiniciar Tablero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/botreiniciar" />
+
+        <TextView
+            android:text="Errores : 0"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/botreiniciar"
+            android:layout_height="wrap_content"
+            android:id="@+id/errores"
+            android:layout_weight="1"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:text="Reinas restantes : 8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/reinas"
+            android:layout_weight="1"
+            android:layout_below="@+id/botreiniciar"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:textColor="@android:color/white" />
+
+
+    </RelativeLayout>
+
 </LinearLayout>

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout fila;
     Activity esta = this;
     int errores=0;
+    int reinas=8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,13 @@ public class MainActivity extends AppCompatActivity {
 
                 tab.Clear();
                 botonesUtil.limpiarTablero(esta,idBotones);
+                errores=0;
+                reinas=8;
+                TextView textErrores = (TextView) findViewById(R.id.errores);
+                textErrores.setText("Errores : "+errores);
+
+                TextView textReinas = (TextView) findViewById(R.id.reinas);
+                textReinas.setText("Reinas restantes : "+reinas);
 
 
             }
@@ -95,10 +104,15 @@ public class MainActivity extends AppCompatActivity {
                         if (tab.setCeldaEstado(Tablero.CELDA_REINA,v.getId())) {
                             boton.setBackgroundColor(Color.GREEN);
                             boton.setTextColor(Color.GREEN);
+
+                            reinas --;
+
+
                         } else {
                             boton.setBackgroundColor(Color.RED);
                             boton.setTextColor(Color.RED);
                             errores++;
+
                             if (errores>4) {
                                 errores =0;
                                 Toast mes = Toast.makeText(esta,
@@ -106,11 +120,20 @@ public class MainActivity extends AppCompatActivity {
                                         Toast.LENGTH_SHORT);
                                 mes.show();
                                 tab.Clear();
+                                errores=0;
+                                reinas=8;
                                 botonesUtil.limpiarTablero(esta,idBotones);
 
 
                             }
+
                         }
+
+                        TextView textErrores = (TextView) findViewById(R.id.errores);
+                        textErrores.setText("Errores : "+errores);
+
+                        TextView textReinas = (TextView) findViewById(R.id.reinas);
+                        textReinas.setText("Reinas restantes : "+reinas);
 
                     }
                 });
